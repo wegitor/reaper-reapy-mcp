@@ -406,7 +406,7 @@ def setup_mcp_tools(mcp: FastMCP, controller) -> None:
             start_measure: Start position as "measure:beat,fraction" (optional if start_time is provided)
                          where fraction is milliseconds (e.g., "1:1,500" = measure 1, beat 1, half beat)
             length_time: Duration in seconds from start position (from start_time or start_measure)(optional if length_measure is provided).
-            length_measure: Duration as "measure:beat,fraction" from start position (e.g., "2:1,000" = 2 measures from start_time or start_measure)(optional if length_time is provided). Also remember 2:0,0 is not end of 2 measure and 3:1,0 should be.
+            length_measure: Duration as "measure:beat,fraction" from start position (e.g., "2:1,000" = 2 measures from start_time or start_measure)(optional if length_time is provided). The range starts from 0:1,0. The value 0:4,0 equals three beats in a 4/4 time signature. Thus, if you want the length of all beats from one measure, then use 1:1,0; for two measures, use 2:1,0; and for three, use 3:1,0.
         """
         try:
             # Normalize length_measure: reject explicit zero-length "0:0,0", convert "M:0,0" -> "M+1:1,0"
