@@ -3,7 +3,7 @@ from reapy import reascript_api as RPR
 import logging
 from typing import Optional, Union
 from utils.position_utils import get_time_map_info
-from .base_controller import BaseController
+from src.controllers.base_controller import BaseController
 import os
 
 class ProjectController(BaseController):

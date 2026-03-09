@@ -5,7 +5,7 @@ import re
 import time
 from typing import List, Dict, Any
 
-from .base_controller import BaseController
+from src.controllers.base_controller import BaseController
 
 class FXController(BaseController):
     """Controller for FX-related operations in Reaper."""

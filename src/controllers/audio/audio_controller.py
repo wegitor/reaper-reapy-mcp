@@ -5,7 +5,7 @@ from typing import Union
 import time
 from reapy import reascript_api as RPR
 
-from .base_controller import BaseController
+from src.controllers.base_controller import BaseController
 from utils.item_utils import get_item_by_id_or_index, get_item_properties, select_item, delete_item
 
 class AudioController(BaseController):

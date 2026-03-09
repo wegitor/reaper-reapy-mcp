@@ -2,7 +2,7 @@ import reapy
 import logging
 from typing import Optional
 
-from .base_controller import BaseController
+from src.controllers.base_controller import BaseController
 
 class TrackController(BaseController):
     """Controller for track-related operations in Reaper."""

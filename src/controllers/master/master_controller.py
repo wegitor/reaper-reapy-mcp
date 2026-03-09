@@ -2,7 +2,7 @@ import reapy
 import logging
 from typing import Dict, Any, Optional
 
-from .base_controller import BaseController
+from src.controllers.base_controller import BaseController
 
 class MasterController(BaseController):
     """Controller for master track operations in Reaper."""
