@@ -3,20 +3,15 @@
 import os
 import sys
 
-# Add necessary paths for imports
-script_dir = os.path.dirname(os.path.abspath(__file__))
-repo_root = os.path.dirname(script_dir)
-sys.path.insert(0, script_dir)  # Add script directory to path
-
 # Import controllers directly from the local directory
-from controllers.base_controller import BaseController
-from controllers.track.track_controller import TrackController
-from controllers.fx.fx_controller import FXController
-from controllers.marker.marker_controller import MarkerController
-from controllers.midi.midi_controller import MIDIController
-from controllers.audio.audio_controller import AudioController
-from controllers.master.master_controller import MasterController
-from controllers.project.project_controller import ProjectController
+from .controllers.base_controller import BaseController
+from .controllers.track.track_controller import TrackController
+from .controllers.fx.fx_controller import FXController
+from .controllers.marker.marker_controller import MarkerController
+from .controllers.midi.midi_controller import MIDIController
+from .controllers.audio.audio_controller import AudioController
+from .controllers.master.master_controller import MasterController
+from .controllers.project.project_controller import ProjectController
 
 # Create a combined controller that inherits from all controllers
 class ReaperController(

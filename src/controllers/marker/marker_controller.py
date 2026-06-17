@@ -2,7 +2,7 @@ import reapy
 import logging
 from typing import Dict, Any
 
-from src.controllers.base_controller import BaseController
+from ..base_controller import BaseController
 
 class MarkerController(BaseController):
     """Controller for marker and region-related operations in Reaper."""

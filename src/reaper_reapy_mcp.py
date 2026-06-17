@@ -2,16 +2,11 @@ import logging
 import os
 import sys
 
-# Add necessary paths for imports
-script_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, script_dir)  # Add script directory to path
-
 from mcp.server.fastmcp import FastMCP
 from mcp import StdioServerParameters
+from .mcp_tools import setup_mcp_tools
 
-# Import directly from the same directory
-from reaper_controller import ReaperController
-from mcp_tools import setup_mcp_tools
+from .reaper_controller import ReaperController
 
 def main():
     # Setup logging

@@ -5,7 +5,7 @@ import os
 import re
 import time
 from typing import Optional, List, Dict, Any, Union, Tuple
-from utils.item_utils import get_item_properties
+from reaper_reapy_mcp.utils.item_utils import get_item_properties
 
 class BaseController:
     """Base controller for interacting with Reaper using reapy."""

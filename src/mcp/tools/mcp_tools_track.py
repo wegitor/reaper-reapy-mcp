@@ -3,7 +3,6 @@ from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
 from typing import Optional, Dict, Any, List, Union
 import reapy
-from utils.position_utils import position_to_time, time_to_measure, get_time_map_info, measure_length_to_time
 
 def _setup_track_tools(mcp: FastMCP, controller) -> None:
     """Setup track-related MCP tools."""

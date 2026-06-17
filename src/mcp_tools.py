@@ -2,15 +2,14 @@ from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
 from typing import Optional, Dict, Any, List, Union
 import reapy
-from utils.position_utils import position_to_time, time_to_measure, get_time_map_info, measure_length_to_time
 
-from src.mcp.tools.mcp_tools_track import _setup_track_tools
-from src.mcp.tools.mcp_tools_fx import _setup_fx_tools
-from src.mcp.tools.mcp_tools_audio import _setup_audio_tools
-from src.mcp.tools.mcp_tools_midi import _setup_midi_tools
-from src.mcp.tools.mcp_tools_marker import _setup_marker_tools
-from src.mcp.tools.mcp_tools_master import _setup_master_tools
-from src.mcp.tools.mcp_tools_project import _setup_project_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_track   import _setup_track_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_fx      import _setup_fx_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_audio   import _setup_audio_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_midi    import _setup_midi_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_marker  import _setup_marker_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_master  import _setup_master_tools
+from reaper_reapy_mcp.mcp.tools.mcp_tools_project import _setup_project_tools
 
 def setup_mcp_tools(mcp: FastMCP, controller) -> None:
     """Setup MCP tools for Reaper control."""

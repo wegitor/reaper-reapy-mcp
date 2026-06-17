@@ -1,9 +1,8 @@
 import asyncio
-
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
-
-from typing import Optional, Dict, Any, List, Union
+from typing import Dict, Any
+import json
 
 async def run_tool_wrap(session: any, name: str, args: Dict[str, Any]):
     print(f"Run tool: {name}")
@@ -11,6 +10,8 @@ async def run_tool_wrap(session: any, name: str, args: Dict[str, Any]):
     for content in result.content:
         if isinstance(content, types.TextContent):
             print(f"Text: {content.text}")
+            data = json.loads(content.text)
+            assert data["status"] == "success"
 
 async def parse_tool_results():
     """Demonstrates how to parse different types of content in CallToolResult."""

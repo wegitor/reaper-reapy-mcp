@@ -806,7 +806,7 @@ wheels = [
 
 [[package]]
 name = "reaper-reapy-mcp"
-version = "0.1.4"
+version = "0.1.4.dev"
 source = { editable = "." }
 dependencies = [
     { name = "mcp", extra = ["cli"] },

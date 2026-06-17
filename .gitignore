@@ -46,6 +46,8 @@ logs/
 samples/
 *.mp3
 *.wav
+*.flac
+*.mp4
 
 # Environment variables
 .env

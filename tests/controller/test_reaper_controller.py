@@ -8,7 +8,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.reaper_controller import ReaperController
-from src.utils.sample_audio import ensure_sample_file
+from tests.sample_audio import ensure_sample_file
 
 class TestReaperController(unittest.TestCase):
     """Test suite for ReaperController functionality."""

@@ -2,8 +2,7 @@
 from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
 from typing import Optional, Dict, Any, List, Union
-import reapy
-from utils.position_utils import position_to_time, time_to_measure, get_time_map_info, measure_length_to_time
+from reaper_reapy_mcp.utils.position_utils import position_to_time, time_to_measure, get_time_map_info
 
 def _setup_project_tools(mcp: FastMCP, controller) -> None:
     """Setup project-related MCP tools."""
@@ -121,7 +120,7 @@ def _setup_project_tools(mcp: FastMCP, controller) -> None:
                       end_measure: Optional[str] = None,
                       samplerate: int = 44100,
                       channels: int = 2,
-                      **kwargs) -> Dict[str, Any]:
+                      file_format: str = "wave") -> Dict[str, Any]:
         """Render project to audio file.
         
         Args:
@@ -132,7 +131,10 @@ def _setup_project_tools(mcp: FastMCP, controller) -> None:
             end_measure: End position as "measure:beat,fraction" (optional if end_time is provided)
             samplerate: Sample rate in Hz (default: 44100)
             channels: Number of channels (default: 2)
-            **kwargs: Additional render settings
+            file_format: Formats available on this machine
+                "wave" "aiff" "iso " "ddp "
+                "flac" "mp3l" "oggv" "OggS"
+                "FFMP" "GIF " "LCF " "wvpk"
         """
         try:
             # Convert measure positions to time if provided
@@ -154,8 +156,8 @@ def _setup_project_tools(mcp: FastMCP, controller) -> None:
                 end_pos = end_measure
             
             # Perform render
-            if controller.render_project(output_file, render_start, render_end, 
-                                      samplerate, channels, **kwargs):
+            if controller.render_project(output_file, file_format, render_start, render_end, 
+                                      samplerate, channels):
                 response = {
                     "status": "success",
                     "message": f"Project rendered to {output_file}",

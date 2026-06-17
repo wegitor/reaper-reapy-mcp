@@ -2,7 +2,8 @@ import reapy
 import logging
 from typing import Dict, Any, Optional
 
-from src.controllers.base_controller import BaseController
+from ..base_controller import BaseController
+from reapy import reascript_api as RPR
 
 class MasterController(BaseController):
     """Controller for master track operations in Reaper."""
@@ -45,7 +46,7 @@ class MasterController(BaseController):
         try:
             project = reapy.Project()
             master = project.master_track
-            master.volume = volume
+            master.set_info_value("D_VOL", volume)
             return True
         except Exception as e:
             self.logger.error(f"Failed to set master volume: {e}")
@@ -64,7 +65,8 @@ class MasterController(BaseController):
         try:
             project = reapy.Project()
             master = project.master_track
-            master.pan = pan
+
+            master.set_info_value("D_PAN", pan)
             return True
         except Exception as e:
             self.logger.error(f"Failed to set master pan: {e}")
@@ -83,10 +85,9 @@ class MasterController(BaseController):
         try:
             project = reapy.Project()
             master = project.master_track
-            if mute is None:
-                master.mute = not master.mute
-            else:
-                master.mute = mute
+            master_cur_mute_val = master.get_info_value('B_MUTE')
+            master.set_info_value('B_MUTE', not(master_cur_mute_val))
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to toggle master mute: {e}")
@@ -105,10 +106,9 @@ class MasterController(BaseController):
         try:
             project = reapy.Project()
             master = project.master_track
-            if solo is None:
-                master.solo = not master.solo
-            else:
-                master.solo = solo
+            master_cur_solo_val = master.get_info_value('I_SOLO')
+            master.set_info_value('I_SOLO', not(master_cur_solo_val))
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to toggle master solo: {e}")
