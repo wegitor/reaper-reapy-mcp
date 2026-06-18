@@ -25,7 +25,6 @@ venv/
 env/
 ENV/
 .venv/
-uv.lock
 
 # IDE
 .idea/
