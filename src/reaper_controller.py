@@ -1,8 +1,5 @@
 # This file is now just a wrapper around the controllers package
 
-import os
-import sys
-
 # Import controllers directly from the local directory
 from .controllers.base_controller import BaseController
 from .controllers.track.track_controller import TrackController

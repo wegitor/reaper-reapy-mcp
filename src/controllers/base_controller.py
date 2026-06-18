@@ -1,10 +1,8 @@
 import reapy
 from reapy import reascript_api as RPR
 import logging
-import os
-import re
 import time
-from typing import Optional, List, Dict, Any, Union, Tuple
+from typing import Optional
 from reaper_reapy_mcp.utils.item_utils import get_item_properties
 
 class BaseController:

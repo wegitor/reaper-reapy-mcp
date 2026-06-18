@@ -1,7 +1,5 @@
-from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
-from typing import Optional, Dict, Any, List, Union
-import reapy
+from typing import Dict, Any
 
 from reaper_reapy_mcp.mcp.tools.mcp_tools_track   import _setup_track_tools
 from reaper_reapy_mcp.mcp.tools.mcp_tools_fx      import _setup_fx_tools

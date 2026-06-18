@@ -1,7 +1,5 @@
-
-from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
-from typing import Optional, Dict, Any, List, Union
+from typing import Optional, Dict, Any
 import reapy
 
 def _setup_track_tools(mcp: FastMCP, controller) -> None:

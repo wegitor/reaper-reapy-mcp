@@ -1,7 +1,5 @@
-
-from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
-from typing import Optional, Dict, Any, List, Union
+from typing import Optional, Dict, Any, Union
 import reapy
 from reaper_reapy_mcp.utils.position_utils import position_to_time, time_to_measure
 

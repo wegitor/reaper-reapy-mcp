@@ -1,7 +1,5 @@
-
-from mcp import types
 from mcp.server.fastmcp import FastMCP, Context
-from typing import Optional, Dict, Any, List, Union
+from typing import Optional, Dict, Any
 
 def _setup_master_tools(mcp: FastMCP, controller) -> None:
     """Setup master track-related MCP tools."""
