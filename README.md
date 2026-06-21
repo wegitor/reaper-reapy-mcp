@@ -19,6 +19,11 @@ A Python application for controlling REAPER Digital Audio Workstation (DAW) usin
 - **Reliable Duplication**: Uses REAPER's built-in commands for accurate item copying
 - **MCP Integration**: Model Context Protocol server for AI assistant control
 
+## Status
+
+- **Checked on Linux**: Yes
+- **MCP HTTP Mode**: Supported for parameters
+
 ## Requirements
 
 - Python 3.7+
@@ -61,6 +66,11 @@ You can run the server using uv directly:
 uv --directory <project_path> run -m reaper_reapy_mcp
 ```
 
+For the current directory and http MCP mode:
+```bash
+uv --directory . run -m reaper_reapy_mcp --mode http
+```
+
 For example, on Windows:
 ```bash
 uv --directory C:\path\to\reaper_reapy_mcp run -m reaper_reapy_mcp
@@ -69,6 +79,18 @@ uv --directory C:\path\to\reaper_reapy_mcp run -m reaper_reapy_mcp
 Or using the Python module directly after installation:
 ```bash
 python -m reaper_reapy_mcp
+```
+
+#### HTTP Mode
+
+Run the server in HTTP mode with default settings:
+```bash
+python -m reaper_reapy_mcp --mode http
+```
+
+Run with custom host and port:
+```bash
+python -m reaper_reapy_mcp --mode http --http-host example_host --http-port 3958
 ```
 
 ### Use the MCP inspector to test the tools:
