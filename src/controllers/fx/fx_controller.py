@@ -264,7 +264,7 @@ class FXController(BaseController):
                 fx_info = {
                     "index": fx_index,
                     "name": fx.name,
-                    "enabled": fx.enabled if hasattr(fx, 'enabled') else True
+                    "enabled": fx.is_enabled if hasattr(fx, 'is_enabled') else None
                 }
                 fx_list.append(fx_info)
             
@@ -381,9 +381,9 @@ class FXController(BaseController):
             track = project.tracks[track_index]
             fx = track.fxs[fx_index]
             if enable is None:
-                fx.enabled = not fx.enabled
+                fx.is_enabled = not fx.is_enabled
             else:
-                fx.enabled = enable
+                fx.is_enabled = enable
             return True
 
         except Exception as e:
