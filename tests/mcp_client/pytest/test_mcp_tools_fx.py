@@ -7,6 +7,8 @@ TRACK_NAME = "Test Track 1"
 FX_NAME = "ReaEQ (Cockos)"
 FX_DISPLAY = "VST: ReaEQ (Cockos)"
 PARAM_NAME = "Global Gain"
+SET_PARAM_VALUE = 0.6
+FLOAT_TOLERANCE = 1e-6
 
 
 def assert_message(result, substring, fail_msg=None):
@@ -44,6 +46,22 @@ def parse_numeric_value(result):
     return float(match.group())
 
 
+def assert_float_equal(actual, expected, tolerance=FLOAT_TOLERANCE, msg=""):
+    """Assert two float values are equal within tolerance."""
+    assert abs(actual - expected) <= tolerance, (
+        f"{msg}Expected {expected}, but got {actual} "
+        f"(difference: {abs(actual - expected)})"
+    )
+
+
+def find_parameter_in_list(params, param_name):
+    """Find a parameter by name in the parameter list."""
+    for param in params:
+        if param.get("name") == param_name or param_name in param.get("name", ""):
+            return param
+    return None
+
+
 async def run_tools():
     tool_seq = [
         {"name": "create_track", "args": {"name": TRACK_NAME}},
@@ -53,7 +71,7 @@ async def run_tools():
         {"name": "get_fx_list", "args": {"track_index": 0}},
         {"name": "get_fx_param_list", "args": {"track_index": 0, "fx_index": 0}},
         {"name": "get_fx_param", "args": {"track_index": 0, "fx_index": 0, "param_name": PARAM_NAME}},
-        {"name": "set_fx_param", "args": {"track_index": 0, "fx_index": 0, "param_name": PARAM_NAME, "value": 0.6}},
+        {"name": "set_fx_param", "args": {"track_index": 0, "fx_index": 0, "param_name": PARAM_NAME, "value": SET_PARAM_VALUE}},
         {"name": "get_fx_param", "args": {"track_index": 0, "fx_index": 0, "param_name": PARAM_NAME}},
         {"name": "toggle_fx", "args": {"track_index": 0, "fx_index": 0, "enable": False}},
         {"name": "get_fx_list", "args": {"track_index": 0}},
@@ -94,14 +112,22 @@ async def run_tools():
     assert isinstance(params, list), "Expected FX parameter list"
     assert params, "Expected at least one parameter for the added FX"
 
+    # verify parameter exists in list with initial value
+    param_from_list = find_parameter_in_list(params, PARAM_NAME)
+    assert param_from_list is not None, f"Expected parameter '{PARAM_NAME}' in parameter list"
+    initial_value_from_list = param_from_list.get("value")
+    assert isinstance(initial_value_from_list, (int, float)), f"Expected numeric initial value in parameter list, got {type(initial_value_from_list)}"
+
     # get initial parameter value
     assert_message(results[6], "Parameter Global Gain value", f"Failed to read initial FX parameter: {results[6]}")
     initial_param_value = parse_numeric_value(results[6])
+    assert_float_equal(initial_param_value, initial_value_from_list, msg="Initial parameter value from get_fx_param does not match value from parameter list: ")
 
     # set/get parameter
     assert_message(results[7], "Set parameter", f"Failed to set FX parameter: {results[7]}")
     assert_message(results[8], "Parameter Global Gain value", f"Failed to read FX parameter after set: {results[8]}")
     updated_param_value = parse_numeric_value(results[8])
+    assert_float_equal(updated_param_value, SET_PARAM_VALUE, msg="Parameter value after set does not match expected value: ")
     assert updated_param_value != initial_param_value, (
         f"Expected FX parameter value to change after setting it; "
         f"initial={initial_param_value}, updated={updated_param_value}. "

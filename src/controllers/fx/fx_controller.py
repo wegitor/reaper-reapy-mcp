@@ -108,38 +108,19 @@ class FXController(BaseController):
             # Try to find parameter by name
             for param_index in range(fx.n_params):
                 if fx.params[param_index].name.lower() == param_name.lower():
-                    # Store current value for logging
-                    try:
-                        current_value = fx.params[param_index].value
-                    except Exception:
-                        current_value = None
-                    
                     # Set the new value using multiple approaches
                     try:
                         # Set using reapy's API
-                        fx.params[param_index].value = value
+                        fx.params[param_index] = value
                     except Exception as e:
                         self.logger.debug(f"Failed to set parameter via reapy API: {e}")
-                    
-                    # Also use ReaScript API directly which may be more reliable
-                    try:
-                        reapy.reascript_api.TrackFX_SetParamNormalized(track.id, fx_index, param_index, value)
-                    except Exception as e:
-                        self.logger.debug(f"Failed to set parameter via ReaScript API: {e}")
-                    
+                        return False
+
                     # Wait longer for REAPER to update (0.1s instead of 0.01s)
                     time.sleep(0.1)
-                    
-                    # Verify the change was applied
-                    try:
-                        new_value = reapy.reascript_api.TrackFX_GetParamNormalized(track.id, fx_index, param_index)
-                        self.logger.debug(f"Verified new value is {new_value}")
-                    except Exception:
-                        pass
-                    
                     return True
             
-            self.logger.warning(f"FX parameter '{param_name}' not found 1")
+            self.logger.warning(f"FX parameter '{param_name}' not found")
             return False
         except Exception as e:
             self.logger.error(f"Failed to set FX parameter: {e}")
@@ -165,30 +146,13 @@ class FXController(BaseController):
             # Try to find parameter by name
             for param_index in range(fx.n_params):
                 if fx.params[param_index].name.lower() == param_name.lower():
-                    param = fx.params[param_index]
-                    
-                    # First try using the ReaScript API directly, which might be more reliable
                     try:
-                        # Try to get the normalized value directly from REAPER
-                        value = reapy.reascript_api.TrackFX_GetParamNormalized(track.id, fx_index, param_index)
-                        if value is not None:
-                            return value
-                    except Exception:
-                        pass
-                    
-                    # Safely get the parameter value using reapy's API
-                    try:
-                        value = param.value
-                        return value
+                        return fx.params[param_index]
                     except AttributeError:
-                        # If direct access fails, try using get_value() method
-                        try:
-                            value = param.get_value() if hasattr(param, 'get_value') else 0.0
-                            return value
-                        except Exception:
-                            self.logger.warning(f"Could not get value for parameter {param_name}")
-                            return 0.0
-            self.logger.warning(f"FX parameter '{param_name}' not found 2")
+                        self.logger.warning(f"Could not get value for parameter {param_name}")
+                        return 0.0
+
+            self.logger.warning(f"FX parameter '{param_name}' not found")
             return 0.0
         except Exception as e:
             self.logger.error(f"Failed to get FX parameter: {e}")
@@ -215,21 +179,11 @@ class FXController(BaseController):
                 param = fx.params[param_index]
                 param_info = {
                     "index": param_index,
-                    "name": param.name
+                    "name":  param.name,
+                    "range": param.range,
+                    "value": param
                 }
-                
-                # Safely get parameter value using exception handling
-                try:
-                    param_info["value"] = param.value
-                except AttributeError:
-                    # If direct value access fails, try using get_value() method
-                    try:
-                        param_info["value"] = param.get_value() if hasattr(param, 'get_value') else 0.0
-                    except Exception:
-                        # As a fallback, provide a default value
-                        param_info["value"] = 0.0
-                        self.logger.warning(f"Could not get value for parameter {param.name}")
-                
+       
                 # Safely get formatted value
                 try:
                     param_info["formatted_value"] = param.formatted_value if hasattr(param, 'formatted_value') else str(param_info["value"])
